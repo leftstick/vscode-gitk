@@ -19,7 +19,8 @@ export function log(filePath: string, cwd: string): Promise<Array<Commit>> {
             }
 
             const commits: Array<Commit> = stdout
-                .split(os.EOL)
+                .replace(/\r\n/mg, '\n')
+                .split('\n')
                 .filter(line => line)
                 .map(line => {
                     const data = line.split('-=-');
