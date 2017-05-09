@@ -32,6 +32,9 @@ export class GitkProvider implements vscode.TextDocumentContentProvider {
         <html>
         <style>
             * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
                 font-family: monospace;
             }
             html, body {
@@ -43,6 +46,11 @@ export class GitkProvider implements vscode.TextDocumentContentProvider {
             .container {
                 display: flex;
                 flex-direction: column;
+                width: 100%;
+                max-width: 100%;
+                height: 100%;
+                max-height: 100%;
+                flex-grow: 0;
             }
             .commits {
                 display: flex;
@@ -84,12 +92,10 @@ export class GitkProvider implements vscode.TextDocumentContentProvider {
             }
 
             .commit .message {
-                display: inline-block;
                 flex: 2;
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
-                min-width: 0;
             }
 
             .commit .date {

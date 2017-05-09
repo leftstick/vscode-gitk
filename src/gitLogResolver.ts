@@ -10,7 +10,9 @@ export function log(filePath: string, cwd: string): Promise<Array<Commit>> {
             cwd: cwd
         }, (error, stdout, stderr) => {
             if (error) {
-                return reject(error);
+                const msgs = error.message.split('\n');
+                const msg = msgs.length === 1 ? msgs[0] : msgs.filter(m => m).find(m => !m.startsWith('Command failed'));
+                return reject(msg);
             }
             if (stderr) {
                 return reject(stderr);

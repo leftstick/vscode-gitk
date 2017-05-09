@@ -2,7 +2,7 @@
     "name": "vscode-gitk",
     "displayName": "gitk",
     "description": "show commit log for selected source code information in an individual view",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "publisher": "howardzuo",
     "engines": {
         "vscode": "^1.12.0"

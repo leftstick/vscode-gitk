@@ -28,13 +28,21 @@ export function activate(context: vscode.ExtensionContext) {
         const fileName = (fileUri && fileUri.fsPath) || (vscode.window.activeTextEditor && vscode.window.activeTextEditor.document.fileName);
 
         if (vscode.workspace.textDocuments.some(t => t.fileName === '/gitk')) {
-            return provider.update(GITKURI, fileName);
+            return provider
+                .update(GITKURI, fileName)
+                .catch(err => {
+                    vscode.window.showErrorMessage(err);
+                });
         }
 
         vscode.commands.executeCommand('vscode.previewHtml', GITKURI, vscode.ViewColumn.One, 'gitk')
-            .then((success) => {
-                return provider.update(GITKURI, fileName);
-            }, (reason) => {
+            .then(success => {
+                return provider
+                    .update(GITKURI, fileName)
+                    .catch(err => {
+                        vscode.window.showErrorMessage(err);
+                    });
+            }, reason => {
                 vscode.window.showErrorMessage(reason);
             });
 
