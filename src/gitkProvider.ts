@@ -35,11 +35,12 @@ export class GitkProvider implements vscode.TextDocumentContentProvider {
                 font-family: monospace;
             }
             html, body {
+                width: 100%;
+                max-width: 100%;
                 height: 100%;
                 max-height: 100%;
             }
             .container {
-                height: 100%;
                 display: flex;
                 flex-direction: column;
             }
@@ -47,12 +48,14 @@ export class GitkProvider implements vscode.TextDocumentContentProvider {
                 display: flex;
                 flex-direction: column;
                 height: 300px;
+                min-height: 300px;
                 flex-shrink: 0;
                 border-bottom: 1px solid #fff;
-                overflow: auto;
+                overflow-y: auto;
             }
             .detail {
                 overflow: auto;
+                flex-grow: 0;
             }
 
             .commit {
@@ -62,6 +65,7 @@ export class GitkProvider implements vscode.TextDocumentContentProvider {
                 margin-top: 3px;
                 margin-bottom: 3px;
                 cursor: pointer;
+                flex-shrink: 0;
             }
 
             .commit.selected {
@@ -72,20 +76,26 @@ export class GitkProvider implements vscode.TextDocumentContentProvider {
             .commit > div {
                 margin-left: 5px;
                 margin-right: 5px;
-                flex-shrink: 0;
             }
 
             .commit .hash {
-                width: 60px;
+                width: 80px;
+                flex-shrink: 0;
             }
 
             .commit .message {
-                flex-grow: 2;
+                display: inline-block;
+                flex: 2;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                min-width: 0;
             }
 
             .commit .date {
                 width: 200px;
                 text-align: right;
+                flex-shrink: 0;
             }
         </style>
         <body>

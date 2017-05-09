@@ -14,7 +14,7 @@ Show git commit log for selected source code information in an individual view
 Launch VS Code Quick Open (`cmd`/`ctrl` + `p`), paste the following command, and press enter.
 
 ```
-ext install vscode-gitk
+ext install gitk
 ```
 
 ## Usage
