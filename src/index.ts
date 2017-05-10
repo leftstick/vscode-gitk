@@ -29,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         if (vscode.workspace.textDocuments.some(t => t.fileName === '/gitk')) {
             return provider
-                .update(GITKURI, fileName)
+                .updateCommits(GITKURI, fileName)
                 .catch(err => {
                     vscode.window.showErrorMessage(err);
                 });
@@ -38,7 +38,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.executeCommand('vscode.previewHtml', GITKURI, vscode.ViewColumn.One, 'gitk')
             .then(success => {
                 return provider
-                    .update(GITKURI, fileName)
+                    .updateCommits(GITKURI, fileName)
                     .catch(err => {
                         vscode.window.showErrorMessage(err);
                     });
@@ -46,6 +46,10 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showErrorMessage(reason);
             });
 
+    });
+
+    vscode.commands.registerCommand('extension.refreshgitk', (uri: string, commit: string) => {
+        provider.updateDetail(GITKURI, uri, commit);
     });
 
     context.subscriptions.push(disposable, registration);

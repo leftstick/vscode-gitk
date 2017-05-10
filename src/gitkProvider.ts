@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 
 import { Commit } from './commit';
+import { Detail } from './detail';
 import { log, detail, colorfullDetail } from './gitLogResolver';
 
 export const GITKURI = vscode.Uri.parse('gitk://sourcecontrol/gitk');
@@ -10,21 +11,23 @@ export class GitkProvider implements vscode.TextDocumentContentProvider {
     private _onDidChange = new vscode.EventEmitter<vscode.Uri>();
     private _targetDocumentFilePath: string;
     private _commits: Array<Commit>;
+    private _detail: Detail;
 
     public provideTextDocumentContent(uri: vscode.Uri): string {
 
-        if (!this._commits) {
+        if (!this._commits && !this._detail) {
             return '';
         }
 
-        const commitsHtml = this._commits.map(c => {
+        const commitsHtml = this._commits.map((c, i) => {
+            const selectClass = c.hash === (this._detail && this._detail.hash) ? 'selected' : '';
             return `
-            <div class="commit">
+            <a class="commit ${selectClass}" href="${encodeURI('command:extension.refreshgitk?' + JSON.stringify([this._targetDocumentFilePath, c.hash]))}">
                 <div class="hash">${c.hash}</div>
                 <div class="message">${c.message}</div>
                 <div class="author">${c.author}</div>
                 <div class="date">${c.date}</div>
-            </div>`;
+            </a>`;
         })
             .join('');
 
@@ -74,6 +77,11 @@ export class GitkProvider implements vscode.TextDocumentContentProvider {
                 margin-bottom: 3px;
                 cursor: pointer;
                 flex-shrink: 0;
+                text-decoration: none;
+                color: #fff;
+            }
+            .commit:focus {
+                outline: none;
             }
 
             .commit.selected {
@@ -109,41 +117,22 @@ export class GitkProvider implements vscode.TextDocumentContentProvider {
                 <div class="commits">
                     ${commitsHtml}
                 </div>
-                <div class="detail">
+                <div class="detail" data-hash="${(this._detail && this._detail.hash) || ''}">
+                    ${(this._detail && this._detail.content) || ''}
                 </div>
             </div>
         </body>
         <script>
-            const data = ${JSON.stringify(this._commits)};
 
-            document.querySelector('.commits').addEventListener('click', function(e) {
-                const commitNode = getCommit(e.target);
-                if (!commitNode) {
-                    return;
-                }
-                const commits = document.querySelectorAll('.commit');
-                for(let i = 0; i < commits.length; i++) {
-                    commits[i].classList.remove('selected');
-                }
-                commitNode.classList.add('selected');
-                
-                const commitData = data.find(c => c.hash === commitNode.querySelector('.hash').innerText);
-                document.querySelector('.detail').innerHTML = commitData.detail;
-            }, false);
-
-            function getCommit(node) {
-                if (node.tagName === 'BODY') {
-                    return;
-                }
-                if (node.classList.contains('commit')) {
-                    return node;
-                }
-                return getCommit(node.parentNode);
+            if (document.querySelector('.commit.selected')) {
+                document.querySelector('.commits').scrollTop = +localStorage.getItem('pos');
+                localStorage.setItem('pos', 0);
             }
 
-            setTimeout(() => {
-                document.querySelector('.commit').click();
-            });
+            document.querySelector('.commits').addEventListener('click', () => {
+                localStorage.setItem('pos', document.querySelector('.commits').scrollTop);
+            }, false);
+
         </script>
         </html>
             `;
@@ -153,20 +142,23 @@ export class GitkProvider implements vscode.TextDocumentContentProvider {
         return this._onDidChange.event;
     }
 
-    public async update(uri: vscode.Uri, targetDocumentFilePath: string) {
+    public async updateCommits(uri: vscode.Uri, targetDocumentFilePath: string) {
         this._targetDocumentFilePath = targetDocumentFilePath;
+        this._detail = null;
 
         const cwd = vscode.workspace.rootPath;
 
         this._commits = await log(targetDocumentFilePath, cwd);
 
-        const details = await Promise.all(this._commits.map(c => detail(targetDocumentFilePath, c.hash, cwd)));
+        this._onDidChange.fire(uri);
+    }
 
-        const colorfullDetails = details.map(d => colorfullDetail(d));
+    public async updateDetail(uri: vscode.Uri, targetDocumentFilePath: string, commit: string) {
+        this._targetDocumentFilePath = targetDocumentFilePath;
 
-        this._commits.forEach((c, i) => {
-            c.detail = colorfullDetails[i];
-        });
+        const cwd = vscode.workspace.rootPath;
+
+        this._detail = await detail(targetDocumentFilePath, commit, cwd);
 
         this._onDidChange.fire(uri);
     }

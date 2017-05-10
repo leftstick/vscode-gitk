@@ -2,6 +2,7 @@ import * as child_process from 'child_process';
 import * as os from 'os';
 
 import { Commit } from './commit';
+import { Detail } from './detail';
 
 export function log(filePath: string, cwd: string): Promise<Array<Commit>> {
 
@@ -38,7 +39,7 @@ export function log(filePath: string, cwd: string): Promise<Array<Commit>> {
 
 }
 
-export function detail(filePath: string, commit: string, cwd: string): Promise<string> {
+export function detail(filePath: string, commit: string, cwd: string): Promise<Detail> {
     return new Promise((resolve, reject) => {
         child_process.exec(`git show --pretty="%b" ${commit} ${filePath}`, {
             cwd: cwd
@@ -50,7 +51,10 @@ export function detail(filePath: string, commit: string, cwd: string): Promise<s
                 return reject(stderr);
             }
 
-            resolve(stdout);
+            resolve({
+                hash: commit,
+                content: colorfullDetail(stdout)
+            });
         });
     });
 }
