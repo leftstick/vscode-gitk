@@ -39,6 +39,9 @@ export function activate(context: vscode.ExtensionContext) {
             .then(success => {
                 return provider
                     .updateCommits(GITKURI, fileName)
+                    .then(() => {
+                        vscode.window.setStatusBarMessage('Double click on commit for copying hash into clipboard', 5000);
+                    })
                     .catch(err => {
                         vscode.window.showErrorMessage(err);
                     });
