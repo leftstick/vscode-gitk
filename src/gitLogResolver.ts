@@ -61,12 +61,13 @@ export function detail(filePath: string, commit: string, cwd: string): Promise<D
 
 export function colorfullDetail(detail: string): string {
     return detail
+        .replace(/\r\n/mg, '\n')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/ /mg, '&nbsp;')
         .replace(/(@@.+@@)/, m => `<span style="color: #00c6c7;">${m}</span>`)
-        .replace(/^(-\s*.+)/mg, m => `<span style="color: #ca1a00;">${m.replace(/\n$/, '')}</span>\n`)
-        .replace(/^(\+\s*.+)/mg, m => `<span style="color: #00c02b;">${m.replace(/\n$/, '')}</span>\n`)
+        .replace(/^(-[^\n]*)/mg, m => `<span style="color: #ca1a00;">${m.replace(/\n$/, '')}</span>\n`)
+        .replace(/^(\+[^\n]*)/mg, m => `<span style="color: #00c02b;">${m.replace(/\n$/, '')}</span>\n`)
         .replace(/\n/mg, '<br/>');
 }
 
