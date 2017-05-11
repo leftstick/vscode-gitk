@@ -133,6 +133,12 @@ export class GitkProvider implements vscode.TextDocumentContentProvider {
                 localStorage.setItem('pos', document.querySelector('.commits').scrollTop);
             }, false);
 
+            setTimeout(() => {
+                if (!document.querySelector('.commit.selected')) {
+                    document.querySelector('.commit').click();
+                }
+            });
+
         </script>
         </html>
             `;
