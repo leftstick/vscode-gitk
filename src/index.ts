@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-import { GitkProvider, GITKURI } from './gitkProvider';
+import { GitkViewProvider, GITKURI } from './gitkViewProvider';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -13,7 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
     console.log('Congratulations, your extension "gitk" is now active!');
 
 
-    const provider = new GitkProvider();
+    const provider = new GitkViewProvider();
     const registration = vscode.workspace.registerTextDocumentContentProvider('gitk', provider);
 
 

@@ -1,58 +1,70 @@
 {
-    "name": "vscode-gitk",
-    "displayName": "gitk",
-    "description": "show commit log for selected source code information in an individual view",
-    "version": "1.0.5",
-    "publisher": "howardzuo",
-    "engines": {
-        "vscode": "^1.12.0"
+  "name": "vscode-gitk",
+  "displayName": "gitk",
+  "description": "show commit log for selected source code information in an individual view",
+  "version": "1.1.0",
+  "publisher": "howardzuo",
+  "engines": {
+    "vscode": "^1.12.0"
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "categories": [
+    "Debuggers"
+  ],
+  "icon": "images/git-logo.png",
+  "bugs": {
+    "url": "https://github.com/leftstick/vscode-gitk/issues",
+    "email": "leftstick@qq.com"
+  },
+  "homepage": "https://github.com/leftstick/vscode-gitk/blob/master/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leftstick/vscode-gitk.git"
+  },
+  "activationEvents": [
+    "onCommand:extension.gitk"
+  ],
+  "license": "GPL-3.0",
+  "main": "./out/src",
+  "contributes": {
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "extension.gitk",
+          "group": "sourcecontrol"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "extension.gitk",
+          "group": "sourcecontrol"
+        }
+      ]
     },
-    "scripts": {
-        "vscode:prepublish": "tsc -p ./",
-        "compile": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install"
-    },
-    "categories": [
-        "Debuggers"
+    "commands": [
+      {
+        "command": "extension.gitk",
+        "title": "Gitk"
+      }
     ],
-    "icon": "images/git-logo.png",
-    "bugs": {
-        "url": "https://github.com/leftstick/vscode-gitk/issues",
-        "email": "leftstick@qq.com"
-    },
-    "homepage": "https://github.com/leftstick/vscode-gitk/blob/master/README.md",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/leftstick/vscode-gitk.git"
-    },
-    "activationEvents": [
-        "onCommand:extension.gitk"
-    ],
-    "license": "GPL-3.0",
-    "main": "./out/src",
-    "contributes": {
-        "menus": {
-            "explorer/context": [{
-                "command": "extension.gitk",
-                "group": "sourcecontrol"
-            }],
-            "editor/context": [{
-                "command": "extension.gitk",
-                "group": "sourcecontrol"
-            }]
-        },
-        "commands": [{
-            "command": "extension.gitk",
-            "title": "Gitk"
-        }],
-        "keybindings": [{
-            "command": "extension.gitk",
-            "key": "alt+k"
-        }]
-    },
-    "devDependencies": {
-        "typescript": "^2.3.2",
-        "vscode": "^1.1.0",
-        "@types/node": "^7.0.18"
-    }
+    "keybindings": [
+      {
+        "command": "extension.gitk",
+        "key": "alt+k"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.64",
+    "@types/node": "^7.0.18",
+    "typescript": "^2.3.2",
+    "vscode": "^1.1.0"
+  },
+  "dependencies": {
+    "lodash.template": "^4.4.0"
+  }
 }

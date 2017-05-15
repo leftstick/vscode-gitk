@@ -1,8 +1,8 @@
 import * as child_process from 'child_process';
 import * as os from 'os';
 
-import { Commit } from './commit';
-import { Detail } from './detail';
+import { Commit } from '../models/commit';
+import { Detail } from '../models/detail';
 
 export function log(filePath: string, cwd: string): Promise<Array<Commit>> {
 

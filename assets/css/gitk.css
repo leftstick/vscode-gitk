@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: monospace;
+}
+html, body {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    flex-grow: 0;
+}
+.commits {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    min-height: 300px;
+    flex-shrink: 0;
+    border-bottom: 1px solid #fff;
+    overflow-y: auto;
+}
+.commits:focus {
+    outline: none;
+}
+.detail {
+    overflow: auto;
+    flex-grow: 0;
+}
+
+.commit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    cursor: pointer;
+    flex-shrink: 0;
+    text-decoration: none;
+    color: #fff;
+}
+.commit:focus {
+    outline: none;
+}
+
+.commit.selected {
+    font-weight: bold;
+    color: #80da51;
+}
+
+.commit > div {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.commit .hash {
+    width: 80px;
+    flex-shrink: 0;
+}
+
+.commit .message {
+    flex: 2;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.commit .date {
+    width: 200px;
+    text-align: right;
+    flex-shrink: 0;
+}
