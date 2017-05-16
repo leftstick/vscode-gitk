@@ -5,8 +5,7 @@ import * as t from 'lodash.template';
 import { Commit } from '../models/commit';
 import { Detail } from '../models/detail';
 
-export function html(commits: Array<Commit>, detail: Detail, targetDocumentFilePath: string) {
-    const compiled = t(`
+const compiled = t(`
         <html>
             <link rel="stylesheet" href="${assetPath('css', 'gitk.css')}" >
             <body>
@@ -36,6 +35,8 @@ export function html(commits: Array<Commit>, detail: Detail, targetDocumentFileP
             </body>
         </html>
     `, { variable: 'obj' });
+
+export function html(commits: Array<Commit>, detail: Detail, targetDocumentFilePath: string) {
 
     return compiled({
         commits,
