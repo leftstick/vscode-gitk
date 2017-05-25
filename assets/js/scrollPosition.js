@@ -2,7 +2,6 @@
     //restore scroll position while detail changed
     if (document.querySelector('.commit.selected')) {
         document.querySelector('.commits').scrollTop = +localStorage.getItem('pos');
-        localStorage.setItem('pos', 0);
     }
 
     //record scroll position before detail gets changed

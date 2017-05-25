@@ -2,7 +2,7 @@
   "name": "vscode-gitk",
   "displayName": "gitk",
   "description": "show commit log for selected source code information in an individual view",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publisher": "howardzuo",
   "engines": {
     "vscode": "^1.12.0"
@@ -31,6 +31,17 @@
   "license": "GPL-3.0",
   "main": "./out/src",
   "contributes": {
+    "configuration": {
+        "type": "object",
+        "title": "Gitk configuration",
+        "properties": {
+            "gitk.fontFamily": {
+                "type": "string",
+                "default": "monospace",
+                "description": "Font family used to display the gitk view"
+            }
+        }
+    },
     "menus": {
       "explorer/context": [
         {
@@ -60,8 +71,8 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.64",
-    "@types/node": "^7.0.18",
-    "typescript": "^2.3.2",
+    "@types/node": "^7.0.22",
+    "typescript": "^2.3.3",
     "vscode": "^1.1.0"
   },
   "dependencies": {

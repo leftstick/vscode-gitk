@@ -23,6 +23,14 @@ I assume you have [git](https://git-scm.com/) installed.
 
 `vscode-gitk` will `log` your selected document, and display log information into a separate view
 
+### Configuration
+
+```javascript
+{
+    "gitk.fontFamily": "monospace" //font you preferred for the gitk view
+}
+```
+
 ## LICENSE ##
 
 [GPL v3 License](https://raw.githubusercontent.com/leftstick/vscode-gitk/master/LICENSE)

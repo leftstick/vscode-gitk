@@ -13,6 +13,7 @@ export class GitkViewProvider implements vscode.TextDocumentContentProvider {
     private _targetDocumentFilePath: string;
     private _commits: Array<Commit>;
     private _detail: Detail;
+    private _config: vscode.WorkspaceConfiguration;
 
     public provideTextDocumentContent(uri: vscode.Uri): string {
 
@@ -20,15 +21,16 @@ export class GitkViewProvider implements vscode.TextDocumentContentProvider {
             return '';
         }
 
-        return html(this._commits, this._detail, this._targetDocumentFilePath);
+        return html(this._commits, this._detail, this._targetDocumentFilePath, this._config);
     }
 
     get onDidChange(): vscode.Event<vscode.Uri> {
         return this._onDidChange.event;
     }
 
-    public async updateCommits(uri: vscode.Uri, targetDocumentFilePath: string) {
+    public async updateCommits(uri: vscode.Uri, targetDocumentFilePath: string, config: vscode.WorkspaceConfiguration) {
         this._targetDocumentFilePath = targetDocumentFilePath;
+        this._config = config;
         this._detail = null;
 
         const cwd = vscode.workspace.rootPath;
@@ -44,6 +46,12 @@ export class GitkViewProvider implements vscode.TextDocumentContentProvider {
         const cwd = vscode.workspace.rootPath;
 
         this._detail = await detail(targetDocumentFilePath, commit, cwd);
+
+        this._onDidChange.fire(uri);
+    }
+
+    public async updateConfig(uri: vscode.Uri, config: vscode.WorkspaceConfiguration) {
+        this._config = config;
 
         this._onDidChange.fire(uri);
     }

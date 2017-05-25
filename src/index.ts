@@ -26,10 +26,16 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         const fileName = (fileUri && fileUri.fsPath) || (vscode.window.activeTextEditor && vscode.window.activeTextEditor.document.fileName);
+        let config = vscode.workspace.getConfiguration('gitk');
+
+        vscode.workspace.onDidChangeConfiguration(() => {
+            config = vscode.workspace.getConfiguration('gitk');
+            provider.updateConfig(GITKURI, config);
+        }, this, context.subscriptions);
 
         if (vscode.workspace.textDocuments.some(t => t.fileName === '/gitk')) {
             return provider
-                .updateCommits(GITKURI, fileName)
+                .updateCommits(GITKURI, fileName, config)
                 .catch(err => {
                     vscode.window.showErrorMessage(err);
                 });
@@ -38,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.executeCommand('vscode.previewHtml', GITKURI, vscode.ViewColumn.One, 'gitk')
             .then(success => {
                 return provider
-                    .updateCommits(GITKURI, fileName)
+                    .updateCommits(GITKURI, fileName, config)
                     .then(() => {
                         vscode.window.setStatusBarMessage('Double click on commit for copying hash into clipboard', 5000);
                     })

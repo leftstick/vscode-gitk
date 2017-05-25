@@ -8,7 +8,7 @@ import { Detail } from '../models/detail';
 const compiled = t(`
         <html>
             <link rel="stylesheet" href="${assetPath('css', 'gitk.css')}" >
-            <body>
+            <body style="font-family: <%= obj.fontFamily %>;">
                 <div class="container">
                     <div class="commits" tabindex="0">
                         <% for (let c of obj.commits) { %>
@@ -36,12 +36,13 @@ const compiled = t(`
         </html>
     `, { variable: 'obj' });
 
-export function html(commits: Array<Commit>, detail: Detail, targetDocumentFilePath: string) {
+export function html(commits: Array<Commit>, detail: Detail, targetDocumentFilePath: string, config: vscode.WorkspaceConfiguration) {
 
     return compiled({
         commits,
         detail,
-        targetDocumentFilePath
+        targetDocumentFilePath,
+        fontFamily: config.fontFamily
     });
 }
 
