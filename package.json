@@ -2,7 +2,7 @@
   "name": "vscode-gitk",
   "displayName": "gitk",
   "description": "show commit log for selected source code information in an individual view",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "publisher": "howardzuo",
   "engines": {
     "vscode": "^1.12.0"
@@ -46,13 +46,15 @@
       "explorer/context": [
         {
           "command": "extension.gitk",
-          "group": "sourcecontrol"
+          "group": "sourcecontrol",
+          "when": "config.git.enabled && scmProvider == git && gitState == idle"
         }
       ],
       "editor/context": [
         {
           "command": "extension.gitk",
-          "group": "sourcecontrol"
+          "group": "sourcecontrol",
+          "when": "config.git.enabled && scmProvider == git && gitState == idle"
         }
       ]
     },
@@ -70,9 +72,9 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.64",
-    "@types/node": "^7.0.22",
-    "typescript": "^2.3.3",
+    "@types/lodash": "^4.14.66",
+    "@types/node": "^7.0.31",
+    "typescript": "^2.3.4",
     "vscode": "^1.1.0"
   },
   "dependencies": {
