@@ -5,6 +5,8 @@ import * as t from 'lodash.template';
 import { Commit } from '../models/commit';
 import { Detail } from '../models/detail';
 
+const SIZE_PER_PAGE = 30;
+
 const compiled = t(`
         <html>
             <link rel="stylesheet" href="${assetPath('css', 'gitk.css')}" >
@@ -22,6 +24,13 @@ const compiled = t(`
                             </a>
                         <% } %>
                     </div>
+                    <div class="pagination">
+                        <div class="group">
+                            <a class="prev <%= obj.pageNum === 1 ? 'disabled' : '' %>" href="<%= encodeURI('command:extension.refreshgitkrepopage?' + JSON.stringify([obj.pageNum - 1])) %>">Prev</a>
+                            &nbsp;
+                            <a class="next <%= obj.pageNum === obj.totalPageCount ? 'disabled' : '' %>" href="<%= encodeURI('command:extension.refreshgitkrepopage?' + JSON.stringify([obj.pageNum + 1])) %>">Next</a>
+                        </div>
+                    </div>
                     <div class="detail" data-hash="<%= (obj.detail && obj.detail.hash) || '' %>">
                         <%= (obj.detail && obj.detail.content) || '' %>
                     </div>
@@ -36,11 +45,16 @@ const compiled = t(`
         </html>
     `, { variable: 'obj' });
 
-export function gitkRepoHTML(commits: Array<Commit>, detail: Detail, config: vscode.WorkspaceConfiguration) {
+export function gitkRepoHTML(pageNum: number = 1, commits: Array<Commit>, detail: Detail, config: vscode.WorkspaceConfiguration) {
+    const totalPageCount = Math.ceil(commits.length / SIZE_PER_PAGE);
+    const start = (pageNum - 1) * SIZE_PER_PAGE;
+    const end = start + SIZE_PER_PAGE;
     return compiled({
-        commits,
+        commits: commits.slice(start, end),
         detail,
-        fontFamily: config.fontFamily
+        fontFamily: config.fontFamily,
+        pageNum,
+        totalPageCount
     });
 }
 

@@ -3,13 +3,23 @@ import * as vscode from 'vscode';
 import { GitkViewProvider, GITKURI } from '../gitkViewProvider';
 
 
-export function registryGitk(context: vscode.ExtensionContext): Array<vscode.Disposable> {
+export function registryGitk(context: vscode.ExtensionContext): vscode.Disposable {
 
-    const provider = new GitkViewProvider();
-    const registration = vscode.workspace.registerTextDocumentContentProvider('gitk', provider);
+    let provider;
+    let registration;
 
     const gitk = vscode.commands.registerCommand('extension.gitk', (fileUri?: vscode.Uri) => {
-        // The code you place here will be executed every time your command is executed
+        if (!provider) {
+            provider = new GitkViewProvider();
+            const refresh = vscode.commands.registerCommand('extension.refreshgitk', (uri: string, commit: string) => {
+                provider.updateDetail(GITKURI, commit, uri);
+            });
+            context.subscriptions.push(refresh);
+        }
+        if (!registration) {
+            registration = vscode.workspace.registerTextDocumentContentProvider('gitk', provider);
+            context.subscriptions.push(registration);
+        }
 
         if ((!fileUri || !fileUri.fsPath) && (!vscode.window.activeTextEditor || !vscode.window.activeTextEditor.document)) {
             vscode.window.showWarningMessage('You have to select a document for gitk');
@@ -48,9 +58,5 @@ export function registryGitk(context: vscode.ExtensionContext): Array<vscode.Dis
 
     });
 
-    const refresh = vscode.commands.registerCommand('extension.refreshgitk', (uri: string, commit: string) => {
-        provider.updateDetail(GITKURI, commit, uri);
-    });
-
-    return [gitk, refresh, registration];
+    return gitk;
 }

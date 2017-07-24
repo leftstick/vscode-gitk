@@ -12,7 +12,7 @@ function getLog(cwd: string, filePath: string): Promise<Array<Commit>> {
     return new Promise((resolve, reject) => {
         child_process.exec(`git log --format="%h-=-%s-=-%an<%ae>-=-%ad" --date=iso ${filePath}`, {
             cwd: cwd,
-            maxBuffer: 500 * 1024
+            maxBuffer: 5000 * 1024
         }, (error, stdout, stderr) => {
             if (error) {
                 const msgs = error.message.split('\n');
@@ -50,7 +50,7 @@ function getDetail(cwd: string, commit: string, filePath: string = ''): Promise<
     return new Promise((resolve, reject) => {
         child_process.exec(`git show --pretty="%b" ${commit} ${filePath}`, {
             cwd: cwd,
-            maxBuffer: 500 * 1024
+            maxBuffer: 5000 * 1024
         }, (error, stdout, stderr) => {
             if (error) {
                 return reject(error);
