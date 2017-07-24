@@ -31,6 +31,16 @@ I assume you have [git](https://git-scm.com/) installed.
 }
 ```
 
+## Change Log
+
+### 2017-07-24
+
+1. add whole repository `Gitk for Repository` support
+
+**Limitation**
+
+If you have long history with your repo, `Gitk for Repository` may not working
+
 ## LICENSE ##
 
 [GPL v3 License](https://raw.githubusercontent.com/leftstick/vscode-gitk/master/LICENSE)

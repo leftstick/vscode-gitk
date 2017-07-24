@@ -4,11 +4,15 @@ import * as os from 'os';
 import { Commit } from '../models/commit';
 import { Detail } from '../models/detail';
 
-export function log(filePath: string, cwd: string): Promise<Array<Commit>> {
+export function log(cwd: string, filePath: string = ''): Promise<Array<Commit>> {
+    return getLog(cwd, filePath);
+}
 
+function getLog(cwd: string, filePath: string): Promise<Array<Commit>> {
     return new Promise((resolve, reject) => {
         child_process.exec(`git log --format="%h-=-%s-=-%an<%ae>-=-%ad" --date=iso ${filePath}`, {
-            cwd: cwd
+            cwd: cwd,
+            maxBuffer: 500 * 1024
         }, (error, stdout, stderr) => {
             if (error) {
                 const msgs = error.message.split('\n');
@@ -36,13 +40,17 @@ export function log(filePath: string, cwd: string): Promise<Array<Commit>> {
             resolve(commits);
         });
     });
-
 }
 
-export function detail(filePath: string, commit: string, cwd: string): Promise<Detail> {
+export function detail(cwd: string, commit: string, filePath: string = ''): Promise<Detail> {
+    return getDetail(cwd, commit, filePath);
+}
+
+function getDetail(cwd: string, commit: string, filePath: string = ''): Promise<Detail> {
     return new Promise((resolve, reject) => {
         child_process.exec(`git show --pretty="%b" ${commit} ${filePath}`, {
-            cwd: cwd
+            cwd: cwd,
+            maxBuffer: 500 * 1024
         }, (error, stdout, stderr) => {
             if (error) {
                 return reject(error);

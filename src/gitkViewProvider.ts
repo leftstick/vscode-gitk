@@ -3,9 +3,10 @@ import * as vscode from 'vscode';
 import { Commit } from './models/commit';
 import { Detail } from './models/detail';
 import { log, detail, colorfullDetail } from './services/gitLogResolver';
-import { html } from './template';
+import { gitkHTML, gitkRepoHTML } from './template';
 
 export const GITKURI = vscode.Uri.parse('gitk://sourcecontrol/gitk');
+export const GITKREPOURI = vscode.Uri.parse('gitk://sourcecontrol/gitkrepo');
 
 
 export class GitkViewProvider implements vscode.TextDocumentContentProvider {
@@ -21,31 +22,35 @@ export class GitkViewProvider implements vscode.TextDocumentContentProvider {
             return '';
         }
 
-        return html(this._commits, this._detail, this._targetDocumentFilePath, this._config);
+        if (!this._targetDocumentFilePath) {
+            return gitkRepoHTML(this._commits, this._detail, this._config);
+        }
+
+        return gitkHTML(this._commits, this._detail, this._targetDocumentFilePath, this._config);
     }
 
     get onDidChange(): vscode.Event<vscode.Uri> {
         return this._onDidChange.event;
     }
 
-    public async updateCommits(uri: vscode.Uri, targetDocumentFilePath: string, config: vscode.WorkspaceConfiguration) {
+    public async updateCommits(uri: vscode.Uri, config: vscode.WorkspaceConfiguration, targetDocumentFilePath?: string) {
         this._targetDocumentFilePath = targetDocumentFilePath;
         this._config = config;
         this._detail = null;
 
         const cwd = vscode.workspace.rootPath;
 
-        this._commits = await log(targetDocumentFilePath, cwd);
+        this._commits = await log(cwd, targetDocumentFilePath);
 
         this._onDidChange.fire(uri);
     }
 
-    public async updateDetail(uri: vscode.Uri, targetDocumentFilePath: string, commit: string) {
+    public async updateDetail(uri: vscode.Uri, commit: string, targetDocumentFilePath?: string) {
         this._targetDocumentFilePath = targetDocumentFilePath;
 
         const cwd = vscode.workspace.rootPath;
 
-        this._detail = await detail(targetDocumentFilePath, commit, cwd);
+        this._detail = await detail(cwd, commit, targetDocumentFilePath);
 
         this._onDidChange.fire(uri);
     }
