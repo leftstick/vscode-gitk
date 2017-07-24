@@ -47,7 +47,7 @@ If you have long history with your repo, `Gitk for Repository` may not working
 
 
 [vs-url]: https://marketplace.visualstudio.com/items?itemName=howardzuo.vscode-gitk
-[vs-image]: http://vsmarketplacebadge.apphb.com/version/howardzuo.vscode-gitk.svg
-[install-url]: http://vsmarketplacebadge.apphb.com/installs/howardzuo.vscode-gitk.svg
-[rate-url]: http://vsmarketplacebadge.apphb.com/rating/howardzuo.vscode-gitk.svg
+[vs-image]: https://vsmarketplacebadge.apphb.com/version/howardzuo.vscode-gitk.svg
+[install-url]: https://vsmarketplacebadge.apphb.com/installs/howardzuo.vscode-gitk.svg
+[rate-url]: https://vsmarketplacebadge.apphb.com/rating/howardzuo.vscode-gitk.svg
 [license-url]: https://img.shields.io/github/license/leftstick/vscode-gitk.svg
