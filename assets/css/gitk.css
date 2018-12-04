@@ -69,6 +69,11 @@ html, body {
     text-decoration: none;
     color: #fff;
 }
+
+.vscode-light .commit {
+  color: #333;
+}
+
 .commit:focus {
     outline: none;
 }
