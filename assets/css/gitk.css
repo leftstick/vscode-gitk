@@ -47,6 +47,7 @@ html, body {
     padding: 5px;
     color: #fff;
     text-decoration: none;
+    cursor: pointer;
 }
 .pagination a.disabled{
     pointer-events: none;

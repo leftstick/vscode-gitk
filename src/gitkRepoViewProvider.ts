@@ -1,28 +1,28 @@
 import * as vscode from 'vscode'
 import { Detail } from './models/detail'
 import { detail, log } from './services/gitLogResolver'
-import { gitkHTML } from './template'
+import { gitkRepoHTML } from './template'
 
-export class GitkContentProvider {
-  private _targetDocumentFilePath: string
+export class gitkRepoViewProvider {
+  private _pageNum: number
   private _config: vscode.WorkspaceConfiguration
 
   public setConfig(_config: vscode.WorkspaceConfiguration): void {
     this._config = _config
   }
 
-  public setTargetDocumentFilePath(_targetDocumentFilePath: string): void {
-    this._targetDocumentFilePath = _targetDocumentFilePath
+  public setPageNum(_pageNum: number): void {
+    this._pageNum = _pageNum
   }
 
   public async getInitHtml(): Promise<string> {
     const cwd = vscode.workspace.workspaceFolders[0]
-    const commits = await log(cwd.uri.fsPath, this._targetDocumentFilePath)
-    return gitkHTML(commits, this._config)
+    const commits = await log(cwd.uri.fsPath)
+    return gitkRepoHTML(this._pageNum, commits, this._config)
   }
 
   public async getDetail(commit: string): Promise<Detail> {
     const cwd = vscode.workspace.workspaceFolders[0]
-    return detail(cwd.uri.fsPath, commit, this._targetDocumentFilePath)
+    return detail(cwd.uri.fsPath, commit)
   }
 }
