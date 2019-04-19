@@ -90,6 +90,6 @@
     "vscode": "^1.1.33"
   },
   "dependencies": {
-    "lodash.template": "^4.4.0"
+    "lodash": "^4.17.11"
   }
 }

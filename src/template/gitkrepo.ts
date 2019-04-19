@@ -1,9 +1,8 @@
 import * as vscode from 'vscode'
 import * as path from 'path'
-import * as t from 'lodash.template'
+import t from 'lodash/template'
 
 import { Commit } from '../models/commit'
-import { Detail } from '../models/detail'
 
 const SIZE_PER_PAGE = 30
 
