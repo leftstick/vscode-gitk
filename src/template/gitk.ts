@@ -10,7 +10,7 @@ const compiled = t(
       <link rel="stylesheet" href="${assetPath('css', 'gitk.css')}" >
       <body style="font-family: <%= obj.fontFamily %>;">
           <div class="container">
-              <div class="commits" tabindex="0">
+              <div id="divCommits" class="commits" tabindex="0">
                   <% for (let c of obj.commits) { %>
                       <a class="commit" data-hash="<%= c.hash %>">
                           <div class="hash"><%= c.hash %></div>
@@ -20,6 +20,7 @@ const compiled = t(
                       </a>
                   <% } %>
               </div>
+              <div id="resizer"></div>
               <div class="detail" />
           </div>
           <script src="${assetPath('js', 'util.js')}"></script>

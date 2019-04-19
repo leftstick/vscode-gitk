@@ -1,74 +1,92 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-html, body {
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    max-height: 100%;
+
+body,
+html {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
 }
+
 .container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    max-height: 100%;
-    flex-grow: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  flex-grow: 0;
 }
+
 .commits {
-    display: flex;
-    flex-direction: column;
-    height: 300px;
-    min-height: 300px;
-    flex-shrink: 0;
-    overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  min-height: 150px;
+  flex-shrink: 0;
+  overflow-y: auto;
 }
+
 .commits:focus {
-    outline: none;
+  outline: none;
 }
+
 .pagination {
-    display: flex;
-    flex-direction: column;
-    margin-top: 5px;
-    margin-bottom: 3px;
-    width: 100%;
-    height: 20px;
-    flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  margin-bottom: 3px;
+  width: 100%;
+  height: 20px;
+  flex-shrink: 0;
 }
-.pagination .group{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+
+.pagination .group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
-.pagination a{
-    padding: 5px;
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
+
+.pagination a {
+  padding: 5px;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
 }
-.pagination a.disabled{
-    pointer-events: none;
-    color: gray;
+
+.pagination a.disabled {
+  pointer-events: none;
+  color: gray;
 }
+
 .detail {
-    border-top: 1px solid #fff;
-    overflow: auto;
-    flex-grow: 0;
+  /* border-top: 1px solid #fff; */
+  overflow: auto;
+  flex-grow: 0;
+}
+
+#resizer {
+  width: 100%;
+  height: 3px;
+  flex-shrink: 0;
+  background-color: white;
+  cursor: ns-resize;
 }
 
 .commit {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 3px;
-    margin-bottom: 3px;
-    cursor: pointer;
-    flex-shrink: 0;
-    text-decoration: none;
-    color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  cursor: pointer;
+  flex-shrink: 0;
+  text-decoration: none;
+  color: #fff;
 }
 
 .vscode-light .commit {
@@ -76,33 +94,33 @@ html, body {
 }
 
 .commit:focus {
-    outline: none;
+  outline: none;
 }
 
 .commit.selected {
-    font-weight: bold;
-    color: #80da51;
+  font-weight: bold;
+  color: #80da51;
 }
 
 .commit > div {
-    margin-left: 5px;
-    margin-right: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .commit .hash {
-    width: 80px;
-    flex-shrink: 0;
+  width: 80px;
+  flex-shrink: 0;
 }
 
 .commit .message {
-    flex: 2;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+  flex: 2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .commit .date {
-    width: 200px;
-    text-align: right;
-    flex-shrink: 0;
+  width: 200px;
+  text-align: right;
+  flex-shrink: 0;
 }
