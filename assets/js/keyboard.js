@@ -26,6 +26,22 @@
 
         nextEle.click();
     }, false);
+    
+    document.querySelector('.commits').addEventListener('keydown', (e) => {
+        if (e.keyCode !== 33 && e.keyCode !== 34) { // pageUp pageDown
+            return;
+        }
+        if (!e.metaKey) {
+            return;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        const detail = document.querySelector('.detail');
+        if (detail) {
+            const viewHeight = detail.clientHeight;
+            detail.scrollBy(0, (e.keyCode === 33 ? -1 : 1) * viewHeight);
+        }
+    }, false);
 
     function height(el) {
 
