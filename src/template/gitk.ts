@@ -13,10 +13,10 @@ const compiled = t(
               <div id="divCommits" class="commits" tabindex="0">
                   <% for (let c of obj.commits) { %>
                       <a class="commit" data-hash="<%= c.hash %>">
-                          <div class="hash"><%= c.hash %></div>
-                          <div class="message"><%= c.message %></div>
-                          <div class="author"><%= c.author %></div>
-                          <div class="date"><%= c.date %></div>
+                          <div class="hash" <%if(obj.colors.hash){%>style="color:<%=obj.colors.hash%>;" <%}%> ><%= c.hash %></div>
+                          <div class="message" <%if(obj.colors.message){%>style="color:<%=obj.colors.message%>;" <%}%> ><%= c.message %></div>
+                          <div class="author" <%if(obj.colors.author){%>style="color:<%=obj.colors.author%>;" <%}%> ><%= c.author %></div>
+                          <div class="date" <%if(obj.colors.date){%>style="color:<%=obj.colors.date%>;" <%}%> ><%= c.date %></div>
                       </a>
                   <% } %>
               </div>
@@ -37,8 +37,11 @@ const compiled = t(
 )
 
 export function gitkHTML(commits: Array<Commit>, config: vscode.WorkspaceConfiguration) {
+  const workconfig = vscode.workspace.getConfiguration('gitk')
+  const colors = Object.assign({}, workconfig.colors)
   return compiled({
     commits,
+    colors,
     fontFamily: config.fontFamily
   })
 }
