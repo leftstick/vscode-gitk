@@ -21,7 +21,7 @@ const compiled = t(
                   <% } %>
               </div>
               <div id="resizer"></div>
-              <div class="detail" />
+              <div class="detail" <%if(obj.colors.defaultDetail){%>style="color:<%=obj.colors.defaultDetail%>;" <%}%> />
           </div>
           <script src="${assetPath('js', 'util.js')}"></script>
           <script src="${assetPath('js', 'takefocus.js')}"></script>
