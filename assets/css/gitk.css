@@ -100,6 +100,7 @@ html {
 .commit.selected {
   font-weight: bold;
   color: #80da51;
+  background-color: #e1e1e1;
 }
 
 .commit > div {
