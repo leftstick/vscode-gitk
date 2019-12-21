@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 import * as path from 'path'
-import t from 'lodash/template'
+import t from 'lodash.template'
 
 import { Commit } from '../models/commit'
 
