@@ -15,10 +15,10 @@ const compiled = t(
             <div id="divCommits" class="commits" tabindex="0">
                 <% for (let c of obj.commits) { %>
                     <a class="commit" data-hash="<%= c.hash %>">
-                        <div class="hash"><%= c.hash %></div>
-                        <div class="message"><%= c.message %></div>
-                        <div class="author"><%= c.author %></div>
-                        <div class="date"><%= c.date %></div>
+                        <div class="hash" <%if(obj.colors.hash){%>style="color:<%=obj.colors.hash%>;" <%}%> ><%= c.hash %></div>
+                        <div class="message" <%if(obj.colors.message){%>style="color:<%=obj.colors.message%>;" <%}%> ><%= c.message %></div>
+                        <div class="author" <%if(obj.colors.author){%>style="color:<%=obj.colors.author%>;" <%}%> ><%= c.author %></div>
+                        <div class="date" <%if(obj.colors.date){%>style="color:<%=obj.colors.date%>;" <%}%> ><%= c.date %></div>
                     </a>
                 <% } %>
             </div>
@@ -30,7 +30,7 @@ const compiled = t(
                 </div>
             </div>
             <div id="resizer"></div>
-            <div class="detail" />
+            <div class="detail" <%if(obj.colors.defaultDetail){%>style="color:<%=obj.colors.defaultDetail%>;" <%}%> />
         </div>
         <script src="${assetPath('js', 'util.js')}"></script>
         <script src="${assetPath('js', 'takefocus.js')}"></script>
@@ -81,6 +81,8 @@ export function gitkRepoHTML(
   commits: Array<Commit>,
   config: vscode.WorkspaceConfiguration
 ) {
+  const workconfig = vscode.workspace.getConfiguration('gitk')
+  const colors = Object.assign({}, workconfig.colors)
   const totalPageCount = Math.ceil(commits.length / SIZE_PER_PAGE)
   const start = (pageNum - 1) * SIZE_PER_PAGE
   const end = start + SIZE_PER_PAGE
@@ -88,7 +90,8 @@ export function gitkRepoHTML(
     commits: commits.slice(start, end),
     fontFamily: config.fontFamily,
     pageNum,
-    totalPageCount
+    totalPageCount,
+    colors
   })
 }
 

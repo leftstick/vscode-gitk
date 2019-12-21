@@ -27,21 +27,30 @@ I assume you have [git](https://git-scm.com/) installed.
 
 ```javascript
 {
-    "gitk.fontFamily": "monospace" //font you preferred for the gitk view
+  "gitk.fontFamily": "monospace", //font you preferred for the gitk view
+  "gitk.colors": { // colors you want to re-define for gitk
+    "hash": "red",
+    "message": "blue",
+    "author": "orange",
+    "date": "white",
+    "defaultDetail": "pink"
+  }
 }
 ```
 
 ## Change Log
 
+### 2019-12-18
+
+1. colors can be configured by setting `gitk.colors`
+
 ### 2017-07-24
 
 1. add whole repository `Gitk for Repository` support
 
-
-## LICENSE ##
+## LICENSE
 
 [GPL v3 License](https://raw.githubusercontent.com/leftstick/vscode-gitk/master/LICENSE)
-
 
 [vs-url]: https://marketplace.visualstudio.com/items?itemName=howardzuo.vscode-gitk
 [vs-image]: https://vsmarketplacebadge.apphb.com/version/howardzuo.vscode-gitk.svg

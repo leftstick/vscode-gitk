@@ -40,6 +40,10 @@
           "type": "string",
           "default": "monospace",
           "description": "Font family used to display the gitk view"
+        },
+        "gitk.colors": {
+          "type": "object",
+          "description": "Colors you can re-define for gitk"
         }
       }
     },
