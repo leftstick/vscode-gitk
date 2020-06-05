@@ -15,10 +15,10 @@ export class gitkRepoViewProvider {
     this._pageNum = _pageNum
   }
 
-  public async getInitHtml(): Promise<string> {
+  public async getInitHtml(webview: vscode.Webview): Promise<string> {
     const cwd = vscode.workspace.workspaceFolders[0]
     const commits = await log(cwd.uri.fsPath)
-    return gitkRepoHTML(this._pageNum, commits, this._config)
+    return gitkRepoHTML(this._pageNum, commits, this._config, webview)
   }
 
   public async getDetail(commit: string): Promise<Detail> {

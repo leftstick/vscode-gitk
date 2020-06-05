@@ -12,7 +12,7 @@ export function registryGitkrepo(context: vscode.ExtensionContext): vscode.Dispo
     async () => {
       config = vscode.workspace.getConfiguration('gitk')
       provider.setConfig(config)
-      const html = await provider.getInitHtml()
+      const html = await provider.getInitHtml(panel.webview)
       panel.webview.html = html
     },
     this,
@@ -22,7 +22,7 @@ export function registryGitkrepo(context: vscode.ExtensionContext): vscode.Dispo
   const gitkrepo = vscode.commands.registerCommand('extension.gitkrepo', async () => {
     if (!panel) {
       panel = vscode.window.createWebviewPanel('gitk', 'Gitk Repo', vscode.ViewColumn.One, {
-        enableScripts: true
+        enableScripts: true,
       })
 
       // Reset when the current panel is closed
@@ -36,7 +36,7 @@ export function registryGitkrepo(context: vscode.ExtensionContext): vscode.Dispo
 
       // Handle messages from the webview
       panel.webview.onDidReceiveMessage(
-        async message => {
+        async (message) => {
           if (message.command === 'read-detail') {
             const detail = await provider.getDetail(message.payload.hash)
             panel.webview.postMessage({ command: 'see-detail', payload: detail })
@@ -46,7 +46,7 @@ export function registryGitkrepo(context: vscode.ExtensionContext): vscode.Dispo
           }
           if (['go-prev', 'go-next'].includes(message.command)) {
             provider.setPageNum(message.payload.pageNum)
-            const html = await provider.getInitHtml()
+            const html = await provider.getInitHtml(panel.webview)
             panel.webview.html = html
           }
         },
@@ -60,7 +60,7 @@ export function registryGitkrepo(context: vscode.ExtensionContext): vscode.Dispo
     try {
       provider.setConfig(config)
       provider.setPageNum(1)
-      const html = await provider.getInitHtml()
+      const html = await provider.getInitHtml(panel.webview)
       panel.webview.html = html
     } catch (error) {
       vscode.window.showErrorMessage(error)

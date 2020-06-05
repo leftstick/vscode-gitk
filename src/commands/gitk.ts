@@ -12,7 +12,7 @@ export function registryGitk(context: vscode.ExtensionContext): vscode.Disposabl
     async () => {
       config = vscode.workspace.getConfiguration('gitk')
       provider.setConfig(config)
-      const html = await provider.getInitHtml()
+      const html = await provider.getInitHtml(panel.webview)
       panel.webview.html = html
     },
     this,
@@ -34,7 +34,7 @@ export function registryGitk(context: vscode.ExtensionContext): vscode.Disposabl
 
     if (!panel) {
       panel = vscode.window.createWebviewPanel('gitk', 'Gitk', vscode.ViewColumn.One, {
-        enableScripts: true
+        enableScripts: true,
       })
       // Reset when the current panel is closed
       panel.onDidDispose(
@@ -47,7 +47,7 @@ export function registryGitk(context: vscode.ExtensionContext): vscode.Disposabl
 
       // Handle messages from the webview
       panel.webview.onDidReceiveMessage(
-        async message => {
+        async (message) => {
           if (message.command === 'read-detail') {
             const detail = await provider.getDetail(message.payload.hash)
             panel.webview.postMessage({ command: 'see-detail', payload: detail })
@@ -66,7 +66,7 @@ export function registryGitk(context: vscode.ExtensionContext): vscode.Disposabl
     try {
       provider.setConfig(config)
       provider.setTargetDocumentFilePath(fileName)
-      const html = await provider.getInitHtml()
+      const html = await provider.getInitHtml(panel.webview)
       panel.webview.html = html
     } catch (error) {
       vscode.window.showErrorMessage(error)

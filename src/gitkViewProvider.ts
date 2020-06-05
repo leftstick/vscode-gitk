@@ -15,10 +15,10 @@ export class GitkContentProvider {
     this._targetDocumentFilePath = _targetDocumentFilePath
   }
 
-  public async getInitHtml(): Promise<string> {
+  public async getInitHtml(webview: vscode.Webview): Promise<string> {
     const cwd = vscode.workspace.workspaceFolders[0]
     const commits = await log(cwd.uri.fsPath, this._targetDocumentFilePath)
-    return gitkHTML(commits, this._config)
+    return gitkHTML(commits, this._config, webview)
   }
 
   public async getDetail(commit: string): Promise<Detail> {

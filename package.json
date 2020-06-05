@@ -2,15 +2,14 @@
   "name": "vscode-gitk",
   "displayName": "gitk",
   "description": "show commit log for selected source code information in an individual view",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "publisher": "howardzuo",
   "engines": {
     "vscode": "^1.33.0"
   },
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
-    "compile": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install"
+    "compile": "tsc -watch -p ./"
   },
   "categories": [
     "Debuggers"
@@ -88,10 +87,10 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash.template": "^4.4.6",
-    "@types/node": "^11.13.0",
-    "typescript": "^3.4.2",
-    "vscode": "^1.1.33"
+    "@types/lodash.template": "^4.5.0",
+    "@types/node": "^14.0.11",
+    "@types/vscode": "^1.45.1",
+    "typescript": "^3.9.5"
   },
   "dependencies": {
     "lodash.template": "^4.5.0"
