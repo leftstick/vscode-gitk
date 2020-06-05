@@ -5,7 +5,7 @@
   "version": "2.2.1",
   "publisher": "howardzuo",
   "engines": {
-    "vscode": "^1.33.0"
+    "vscode": "^1.45.1"
   },
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
