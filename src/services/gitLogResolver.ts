@@ -74,8 +74,8 @@ export function colorfullDetail(detail: string): string {
         .replace(/>/g, '&gt;')
         .replace(/ /mg, '&nbsp;')
         .replace(/(@@.+@@)/, m => `<span style="color: #00c6c7;">${m}</span>`)
-        .replace(/^(-[^\n]*)/mg, m => `<span style="color: #ff2441;">${m.replace(/\n$/, '')}</span>\n`)
-        .replace(/^(\+[^\n]*)/mg, m => `<span style="color: #00c02b;">${m.replace(/\n$/, '')}</span>\n`)
+        .replace(/^(-[^\n]*)/mg, m => `<span style="color: #ff2441;">${m.replace(/\n$/, '')}</span>`)
+        .replace(/^(\+[^\n]*)/mg, m => `<span style="color: #00c02b;">${m.replace(/\n$/, '')}</span>`)
         .replace(/\n/mg, '<br/>');
 }
 
